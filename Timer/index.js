@@ -22,9 +22,16 @@ class Timer {
   };
 
   tick = () => {
-    let timeRemaining = parseFloat(this.durationInput.value);
-    this.durationInput.value = --timeRemaining;
+    let timeRemaining = this.timeRemaining;
+    this.timeRemaining = --timeRemaining;
   };
+
+  get timeRemaining() {
+    return parseFloat(this.durationInput.value);
+  }
+  set timeRemaining(time) {
+    this.durationInput.value = time;
+  }
 }
 
 
