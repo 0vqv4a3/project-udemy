@@ -1,11 +1,14 @@
 .dial {
     height: 400px;
     width: 400px;
+    margin: auto;
 }
 
 .timer {
     position: relative;
     display: inline-block;
+    display: grid;
+    margin: auto;
 }
 
 * {
