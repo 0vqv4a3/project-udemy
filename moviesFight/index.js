@@ -14,8 +14,8 @@ const input = document.querySelector("#input-movie");
 
 // debounce input explanation in commentedcode.js, I am assign the delay a default of 1 second
 const debounce = (func, delay = 1000) => {
+    let timeoutId;
     return (...args) => {
-        let timeoutId;
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
@@ -31,4 +31,4 @@ const onInput = event => {
 };
 
 // the second arg in debounce for the delay
-input.addEventListener("input", debounce(onInput, 500));
+input.addEventListener("input", debounce(onInput, 10000));
