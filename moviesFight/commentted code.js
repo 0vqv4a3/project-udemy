@@ -46,8 +46,8 @@ const input = document.querySelector("input");
 
 ////I am assign the delay a default of 1 second
 const debounce = (func, delay = 1000) => {
+  let timeoutId;
   return (...args) => {
-    let timeoutId;
     if (timeoutId) {
       clearTimeout(timeoutId);
     }

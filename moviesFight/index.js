@@ -12,18 +12,6 @@ const fetchData = async searchTerm => {
 // select the input tag
 const input = document.querySelector("#input-movie");
 
-// debounce input explanation in commentedcode.js, I am assign the delay a default of 1 second
-const debounce = (func, delay = 1000) => {
-    let timeoutId;
-    return (...args) => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-        timeoutId = setTimeout(() => {
-            func.apply(null, args);
-        }, delay);
-    };
-};
 
 // asign the callback to fetch data and pass it to event listener
 const onInput = event => {
@@ -31,4 +19,4 @@ const onInput = event => {
 };
 
 // the second arg in debounce for the delay
-input.addEventListener("input", debounce(onInput, 10000));
+input.addEventListener("input", debounce(onInput, 500));
