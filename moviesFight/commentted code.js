@@ -5,7 +5,12 @@ const fetchData = async searchTerm => {
       s: searchTerm
     }
   });
-  console.log(response.data);
+  // console.log(response.data);
+
+  // use S instead s because the data property that passed by omdbapi
+  // use uppercase letter that is not a standard way,
+  // the standard is lower case like many other api
+  return response.data.Search
 };
 
 /// need some refactoring

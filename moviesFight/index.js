@@ -6,7 +6,9 @@ const fetchData = async searchTerm => {
             s: searchTerm
         }
     });
-    console.log(response.data);
+    // just return data that in search property from response data
+    // because other data is not needed
+    return response.data.Search;
 };
 
 // select the input tag
