@@ -87,7 +87,7 @@ const onInput = async event => {
     `;
   }
 
-  document.querySelector('#target').appendChild(div);
+  document.querySelector('.dropdown-content').appendChild(div);
 };
 
 /// or use debounce here if you want to call onInput without debounce latter//

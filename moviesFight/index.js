@@ -16,21 +16,45 @@ const fetchData = async searchTerm => {
 };
 
 // select the input tag
-const input = document.querySelector("#input-movie");
+// const input = document.querySelector("#input-movie");
+const div = document.querySelector('.autocomplete');
+const input = document.createElement('input');
+div.appendChild(input);
+
+const divd = document.createElement('div');
+const divm = document.createElement('div');
+const divc = document.createElement('div');
+divd.className += 'dropdown is-active';
+divm.className += 'dropdown-menu';
+divc.className += 'dropdown-content';
+div.appendChild(divd)
+divd.appendChild(divm);
+divm.appendChild(divc);
 
 
 // asign the callback to fetch data and pass it to event listener
 const onInput = async event => {
     const movies = await fetchData(event.target.value);
 
-    for (let movie of movies) {
-        const div = document.createElement('div');
+    // for (let movie of movies) {
+    //     const div = document.createElement('div');
+    //     div.className += 'dropdown-item';
+    //     div.innerHTML = `
+    //     <img src="${movie.Poster}"/>
+    //     <h1>${movie.Title}</h1>
+    //     `;
+    //     document.querySelector('.dropdown-content').appendChild(div);
+    // }
 
-        div.innerHTML = `
-        <img src="${movie.Poster}"/>
-        <h1>${movie.Title}</h1>
-        `;
-        document.querySelector('#target').appendChild(div);
+    for (let movie of movies) {
+
+        const divi = document.createElement('div');
+        divi.className += 'dropdown-item';
+        divi.innerHTML = `
+         <img src="${movie.Poster}"/>
+         <h1>${movie.Title}</h1>
+         `;
+        divc.appendChild(divi);
     }
 
 };
