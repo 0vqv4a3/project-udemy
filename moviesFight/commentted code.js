@@ -6,7 +6,12 @@ const fetchData = async searchTerm => {
     }
   });
   // console.log(response.data);
-
+  // check if response has Error property, if it has then it means an error but not in the stricest sense of error instead the request is 
+  //succesfull but the design API in omdb is just throw that error if the movie is not found and its a bad design
+  if (response.data.Error) {
+    return [];
+    // return alert('movie not found')
+  }
   // use S instead s because the data property that passed by omdbapi
   // use uppercase letter that is not a standard way,
   // the standard is lower case like many other api
@@ -69,8 +74,20 @@ const debounce = (func, delay = 1000) => {
     fetchData(event.target.value);
 }); */
 
-const onInput = event => {
-  fetchData(event.target.value);
+const onInput = async event => {
+  // add await keyword cause if fetchData assign in movies it will return promise instead of the data because its a async func
+  const movies = await fetchData(event.target.value);
+
+  for (let movie of movies) {
+    const div = document.createElement('div');
+
+    div.innerHTML = `
+    <img src="${movie.Poster}">
+    <h1>${movie.Title}</h1>
+    `;
+  }
+
+  document.querySelector('#target').appendChild(div);
 };
 
 /// or use debounce here if you want to call onInput without debounce latter//
