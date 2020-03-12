@@ -78,16 +78,16 @@ const onInput = async event => {
   // add await keyword cause if fetchData assign in movies it will return promise instead of the data because its a async func
   const movies = await fetchData(event.target.value);
 
-  for (let movie of movies) {
-    const div = document.createElement('div');
+  // for (let movie of movies) {
+  //   const div = document.createElement('div');
 
-    div.innerHTML = `
-    <img src="${movie.Poster}">
-    <h1>${movie.Title}</h1>
-    `;
-  }
+  //   div.innerHTML = `
+  //   <img src="${movie.Poster}">
+  //   <h1>${movie.Title}</h1>
+  //   `;
+  // }
 
-  document.querySelector('.dropdown-content').appendChild(div);
+  // document.querySelector('.dropdown-content').appendChild(div);
 };
 
 /// or use debounce here if you want to call onInput without debounce latter//

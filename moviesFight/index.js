@@ -15,46 +15,42 @@ const fetchData = async searchTerm => {
     return response.data.Search;
 };
 
-// select the input tag
-// const input = document.querySelector("#input-movie");
-const div = document.querySelector('.autocomplete');
-const input = document.createElement('input');
-div.appendChild(input);
+//create html element for reusable dropdown widget
+// all the classname is based on bulma css framework for styling the dropdown
+const root = document.querySelector('.autocomplete');
+root.innerHTML = `
+<label><b>Search For a Movie</b></label>
+<input class="input"/>
+<optionMovies class="dropdown">
+<optionMovies class="dropdown-menu">
+<optionMovies class="dropdown-content results"></optionMovies>
+</optionMovies>
+</optionMovies>
+`;
 
-const divd = document.createElement('div');
-const divm = document.createElement('div');
-const divc = document.createElement('div');
-divd.className += 'dropdown is-active';
-divm.className += 'dropdown-menu';
-divc.className += 'dropdown-content';
-div.appendChild(divd)
-divd.appendChild(divm);
-divm.appendChild(divc);
+// select the input tag and other necessary optionMovies
+const input = document.querySelector("input");
+const dropdown = document.querySelector('.dropdown');
+const resultWrapper = document.querySelector('.results');
+
 
 
 // asign the callback to fetch data and pass it to event listener
 const onInput = async event => {
     const movies = await fetchData(event.target.value);
 
-    // for (let movie of movies) {
-    //     const div = document.createElement('div');
-    //     div.className += 'dropdown-item';
-    //     div.innerHTML = `
-    //     <img src="${movie.Poster}"/>
-    //     <h1>${movie.Title}</h1>
-    //     `;
-    //     document.querySelector('.dropdown-content').appendChild(div);
-    // }
+    resultWrapper.innerHTML = '';
+    dropdown.classList.add('is-active');
 
     for (let movie of movies) {
-
-        const divi = document.createElement('div');
-        divi.className += 'dropdown-item';
-        divi.innerHTML = `
-         <img src="${movie.Poster}"/>
-         <h1>${movie.Title}</h1>
-         `;
-        divc.appendChild(divi);
+        const optionMovies = document.createElement('a');
+        const imgSrc = movie.Poster === "N/A" ? '' : movie.Poster;
+        optionMovies.classList.add('dropdown-item');
+        optionMovies.innerHTML = `
+            <img src="${imgSrc}"/>
+            ${movie.Title}
+        `;
+        resultWrapper.appendChild(optionMovies);
     }
 
 };
