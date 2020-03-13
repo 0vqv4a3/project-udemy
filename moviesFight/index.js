@@ -56,7 +56,7 @@ const onInput = async event => {
         `;
         /// add an eventListener for passing the movie name that user select
         /// and pass the movie name to input.value so it show up in input it's like autocomplete movie name, and close the dropdown menu
-        // and run funct for follow up request
+        // and run funct for follow up request and the rendering in html
         optionMovies.addEventListener('click', (event) => {
             dropdown.classList.remove('is-active');
             input.value = movie.Title;
@@ -94,6 +94,26 @@ const movieTemplate = (movieDetail) => {
             <p>${movieDetail.Plot}</p>
         </div>
     </div>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetail.Awards}</p>
+    <p class="subtitle">Awards</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetail.BoxOffice}</p>
+    <p class="subtitle">BoxOffice</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetail.Metascore}</p>
+    <p class="subtitle">Metascore</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetail.imdbRating}</p>
+    <p class="subtitle">Rating</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetail.imdbVotes}</p>
+    <p class="subtitle">Votes</p>
     </article>
     `;
 }
