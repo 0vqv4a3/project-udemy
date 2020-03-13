@@ -27,6 +27,16 @@ const onMovieSelect = async (movie) => {
     document.querySelector('#summary').innerHTML = movieTemplate(response.data);
 }
 
+createAutoComplete({
+    root: document.querySelector('.autocomplete')
+});
+createAutoComplete({
+    root: document.querySelector('.autocomplete-2')
+});
+createAutoComplete({
+    root: document.querySelector('.autocomplete-3')
+});
+
 // creating a bunch of html element for displaying the movie detail after user selected it
 const movieTemplate = (movieDetail) => {
     return `

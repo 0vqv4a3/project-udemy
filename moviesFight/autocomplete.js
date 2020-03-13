@@ -1,21 +1,21 @@
-const createAutoComplete = (config) => {
-    //create html element for reusable dropdown widget
-    // all the classname is based on bulma css framework for styling the dropdown
-    const root = document.querySelector(".autocomplete");
+const createAutoComplete = ({
+    root
+}) => {
+
     root.innerHTML = `
-    <label><b>Search For a Movie</b></label>
-    <input class="input"/>
-    <div class="dropdown">
-    <div class="dropdown-menu">
-    <div class="dropdown-content results"></div>
-    </div>
-    </div>
+        <label><b>Search For a Movie</b></label>
+        <input class="input"/>
+        <div class="dropdown">
+            <div class="dropdown-menu">
+                <div class="dropdown-content results"></div>
+            </div>
+        </div>
     `;
 
     // select the input tag and other necessary optionMovies
-    const input = document.querySelector("input");
-    const dropdown = document.querySelector(".dropdown");
-    const resultWrapper = document.querySelector(".results");
+    const input = root.querySelector("input");
+    const dropdown = root.querySelector(".dropdown");
+    const resultWrapper = root.querySelector(".results");
 
     // asign the callback to fetch data and pass it to event listener
     const onInput = async event => {
