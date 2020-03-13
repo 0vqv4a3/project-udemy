@@ -1,45 +1,46 @@
 // make request on omdbapi and get the movie data from its response
 const fetchData = async searchTerm => {
-    const response = await axios.get("http://www.omdbapi.com/", {
-        params: {
-            apikey: "8c14c8ce",
-            s: searchTerm
-        }
-    });
-    // check if response has Error property.
-    if (response.data.Error) {
-        return [];
+  const response = await axios.get("http://www.omdbapi.com/", {
+    params: {
+      apikey: "8c14c8ce",
+      s: searchTerm
     }
-    // just return data that in search property from response data
-    // because other data is not needed just the array of different movies is used
-    return response.data.Search;
+  });
+  // check if response has Error property.
+  if (response.data.Error) {
+    return [];
+  }
+  // just return data that in search property from response data
+  // because other data is not needed just the array of different movies is used
+  return response.data.Search;
 };
 
-
 // add function for handling follow up request after user select a movie
-const onMovieSelect = async (movie) => {
-    const response = await axios.get("http://www.omdbapi.com/", {
-        params: {
-            apikey: "8c14c8ce",
-            i: movie.imdbID
-        }
-    });
-    document.querySelector('#summary').innerHTML = movieTemplate(response.data);
-}
+const onMovieSelect = async movie => {
+  const response = await axios.get("http://www.omdbapi.com/", {
+    params: {
+      apikey: "8c14c8ce",
+      i: movie.imdbID
+    }
+  });
+  document.querySelector("#summary").innerHTML = movieTemplate(response.data);
+};
 
 createAutoComplete({
-    root: document.querySelector('.autocomplete')
-});
-createAutoComplete({
-    root: document.querySelector('.autocomplete-2')
-});
-createAutoComplete({
-    root: document.querySelector('.autocomplete-3')
+  root: document.querySelector(".autocomplete"),
+  // add html element for the data that will be rendered in autocomplete search dropdown
+  renderOption(movie) {
+    const imgSrc = movie.Poster === "N/A" ? "" : movie.Poster;
+    return `
+        <img src="${imgSrc}"/>
+        ${movie.Title}
+    `;
+  }
 });
 
 // creating a bunch of html element for displaying the movie detail after user selected it
-const movieTemplate = (movieDetail) => {
-    return `
+const movieTemplate = movieDetail => {
+  return `
     <article class="media">
     <figure class="media-left">
         <p>
@@ -75,4 +76,4 @@ const movieTemplate = (movieDetail) => {
     <p class="subtitle">IMDB Votes</p>
     </article>
     `;
-}
+};
