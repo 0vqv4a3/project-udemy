@@ -49,7 +49,9 @@ const createAutoComplete = ({
     }
   };
 
-  // the second arg in debounce for the delay
+
+
+  // the second arg in debounce for the delay, debounce is in utils.js
   input.addEventListener("input", debounce(onInput, 500));
 
   // add a click event for closing the dropdown if user is clicking outside root element and it's child
