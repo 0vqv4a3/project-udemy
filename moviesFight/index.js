@@ -9,6 +9,7 @@ const onMovieSelect = async movie => {
     document.querySelector("#summary").innerHTML = movieTemplate(response.data);
 };
 
+// pass in config object in createAutoComplete()
 createAutoComplete({
     root: document.querySelector(".autocomplete"),
     // add html element for the data that will be rendered in autocomplete search dropdown
