@@ -101,7 +101,7 @@ const runComparison = () => {
         const leftStatValue = parseInt(leftStat.dataset.value);
         const rightStatValue = parseInt(rightStat.dataset.value);
 
-        //style the movie stats the loss one is yellow
+        //style the movie stats the loss one is yellow & the winner didn't change color
         if (leftStatValue > rightStatValue) {
             rightStat.classList.remove('is-primary');
             rightStat.classList.add('is-warning');
@@ -112,7 +112,6 @@ const runComparison = () => {
     });
 
 }
-
 
 
 // creating a bunch of html element for displaying the movie detail after user selected it
