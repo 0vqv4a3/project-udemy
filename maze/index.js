@@ -4,21 +4,25 @@ const {
   World,
   Render,
   Runner,
-  Bodies,
-  MouseConstraint,
-  Mouse
+  Bodies
 } = Matter;
 
-const width = 800;
+// var for cells in Maze generation
+const cells = 3;
+
+// width and height for canvas
+const width = 600;
 const height = 600;
 
 const engine = Engine.create();
-const { world } = engine;
+const {
+  world
+} = engine;
 const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
-    wireframes: false, // make the shapes solid
+    wireframes: true, // make the shapes solid if false
     width,
     height
   }
@@ -27,31 +31,23 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
-// add MouseConstrain for mouse event like drag, drop , click and collission shape
-World.add(
-  world,
-  MouseConstraint.create(engine, {
-    mouse: Mouse.create(render.canvas)
-  })
-);
-
 // Walls
 const walls = [
-  // canvas height 600 and width 800
+  // the first two value is for center point of the shape
   //top
-  Bodies.rectangle(400, 0, 800, 40, {
+  Bodies.rectangle((width / 2), 0, width, 40, {
     isStatic: true
   }),
   //bottom
-  Bodies.rectangle(400, 600, 800, 40, {
+  Bodies.rectangle(width / 2, height, width, 40, {
     isStatic: true
   }),
   // left
-  Bodies.rectangle(0, 300, 40, 600, {
+  Bodies.rectangle(0, height / 2, 40, height, {
     isStatic: true
   }),
   // right
-  Bodies.rectangle(800, 300, 40, 600, {
+  Bodies.rectangle(width, height / 2, 40, height, {
     isStatic: true
   })
 ];
@@ -59,20 +55,16 @@ const walls = [
 // add walls to world
 World.add(world, walls);
 
-//random shapes
-for (let i = 0; i < 50; i++) {
-  // const random = Math.random();
-  if (Math.random() > 0.5) {
-    World.add(
-      world,
-      Bodies.rectangle(Math.random() * width, Math.random() * height, 50, 50)
-    );
-  } else {
-    World.add(
-      world,
-      Bodies.circle(Math.random() * width, Math.random() * height, 35, {
-        fillStyle: "salmon"
-      })
-    );
-  }
-}
+
+// Maze generation
+// Array(n) make an array with n elements in it
+const grid = Array(cells)
+  .fill(null)
+  .map(() => Array(cells).fill(false));
+
+// make verticals and horizontal array for the grid line;
+const verticals = Array(cells)
+  .fill(null).map(() => Array(cells - 1).fill(false));
+
+const horizontals = Array(cells - 1)
+  .fill(null).map(() => Array(cells).fill(false));
