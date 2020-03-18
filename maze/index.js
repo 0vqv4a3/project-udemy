@@ -142,9 +142,11 @@ const mazeAlgorithm = (row, column) => {
     } else if (direction === 'down') {
       horizontals[row][column] = true;
     }
+
+    mazeAlgorithm(nextRow, nextColumn);
   }
   // Visit the next cell
 
 }
 
-mazeAlgorithm(1, 1);
+mazeAlgorithm(startRow), startColumn);
