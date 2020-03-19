@@ -14,6 +14,9 @@ const cells = 3;
 const width = 600;
 const height = 600;
 
+// unitLeng is the length of one side of cells either it's vertical or horizontal line
+const unitLength = width / cells;
+
 const engine = Engine.create();
 const {
   world
@@ -31,8 +34,8 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
-// Walls
-const walls = [
+// Walls (frame)
+const outBoundsWalls = [
   // the first two value is for center point of the shape
   //top
   Bodies.rectangle((width / 2), 0, width, 40, {
@@ -53,7 +56,7 @@ const walls = [
 ];
 
 // add walls to world
-World.add(world, walls);
+World.add(world, outBoundsWalls);
 
 
 
@@ -103,15 +106,16 @@ const mazeAlgorithm = (row, column) => {
   if (grid[row][column]) {
     return;
   }
+
   // Mark this cells as being visited
-  grid[row][column];
+  grid[row][column] = true;
 
   // assembly randomly-ordered list of neighbor
   const neighbors = shuffle([
-    [row - 1, column, 'up'],
-    [row, column + 1, 'right'],
-    [row + 1, column, 'down'],
-    [row, column - 1, 'left'],
+    [(row - 1), column, 'up'],
+    [row, (column + 1), 'right'],
+    [(row + 1), column, 'down'],
+    [row, (column - 1), 'left'],
   ]);
 
 
@@ -142,11 +146,48 @@ const mazeAlgorithm = (row, column) => {
     } else if (direction === 'down') {
       horizontals[row][column] = true;
     }
-
+    // Visit the next cell
     mazeAlgorithm(nextRow, nextColumn);
   }
-  // Visit the next cell
 
 }
 
-mazeAlgorithm(startRow), startColumn);
+mazeAlgorithm(startRow, startColumn);
+
+// Rendering the maze with matter.js based on result from mazeAlgorithm()
+// horizontals line
+horizontals.forEach((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    // open is the value inside horizontals row array it's value either true or false
+    if (open) {
+      return;
+    }
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + (unitLength / 2),
+      rowIndex * unitLength + unitLength, unitLength, 3, {
+        isStatic: true
+      }
+    );
+
+    World.add(world, wall);
+  })
+});
+
+//Verticals lines
+verticals.forEach((row, rowIndex) => {
+  row.forEach((open, columnIndex) => {
+    // open is column value and it's a boolean
+    if (open) {
+      return;
+    }
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength,
+      rowIndex * unitLength + (unitLength / 2),
+      4, unitLength, {
+        isStatic: true
+      });
+
+    World.add(world, wall);
+  });
+
+});
