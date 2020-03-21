@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secret Massage Webapp</title>
+    <!--  Materialize CSS framework -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="row">
+      <div class="col s8 offset-s2">
+        <div id="massage-show" class="card-panel hide">
+          <h2></h2>
+          <div><a href="./index.html">Create your secret massage</a></div>
+        </div>
+
+        <div id="massage-form" class="card-panel">
+          <form>
+            <label for="secret-massage">Write Your Secret Massage</label>
+            <input id="massage-input" type="text" name="secret-massage" />
+            <button class="btn">create</button>
+          </form>
+        </div>
+
+        <div id="massage-link" class="card-panel hide">
+          <label for="">Share this link with a friend</label>
+          <input id="link-input" type="text" />
+        </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

@@ -10,8 +10,8 @@ const {
 } = Matter;
 
 // var for cells in Maze generation
-const cellsHorizontal = 30; // numbers of column
-const cellsVertical = 30; // numbers of rows
+const cellsHorizontal = 3; // numbers of column
+const cellsVertical = 3; // numbers of rows
 
 // width and height for canvas
 const width = window.innerWidth;
@@ -268,6 +268,6 @@ Events.on(engine, "collisionStart", event => {
   });
 });
 
-document.querySelector("#btn-continue").addEventListener("click", () => {
+document.querySelector("#btn-continue").addEventListener("click", event => {
   return mazeAlgorithm(startRow, startColumn);
 });
