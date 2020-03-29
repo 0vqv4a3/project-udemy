@@ -3,7 +3,6 @@
 const fs = require("fs");
 const util = require("util");
 
-const lstat = util.promisify(fs.lstat);
 // wrapping fs.lstat inside a promise
 // const { lstat } = fs.promises;
 
@@ -21,3 +20,15 @@ fs.readdir(process.cwd(), async (err, filenames) => {
     }
   }
 });
+
+// Method #1 for wrapping fs.lstat inside a promise
+const lstat = filename => {
+  return new Promise((resolve, reject) => {
+    fs.lstat(filename, (err, stats) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(stats);
+    });
+  });
+};
