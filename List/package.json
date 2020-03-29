@@ -8,5 +8,8 @@
   },
   "keywords": [],
   "author": "Muhammad Viqram",
-  "license": "ISC"
+  "license": "ISC",
+  "bin": {
+    "nls": "index.js"
+  }
 }
