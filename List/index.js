@@ -9,20 +9,33 @@ const fs = require("fs");
 
 // run readdir() in fs object for reading all file inside a directory, Note: process.pwd() Current Working Directory(cwd)
 // the same as saying search current working directory from where exactly this program(index.js) excecuted from.
-fs.readdir(process.cwd(), (err, filesnames) => {
+fs.readdir(process.cwd(), (err, filenames) => {
   if (err) {
     console.log(err);
   }
 
-  // BAD CODE!!!!!
-  for (let filename of filesnames) {
+  const allStats = Array(filenames.length).fill(null);
+
+  for (let filename of filenames) {
+    const index = filenames.indexOf(filename);
+
     // checking the stat of a single file or folder
     fs.lstat(filename, (err, stats) => {
       if (err) {
         console.log(err);
       }
 
-      console.log(filename, stats.isFile());
+      allStats[index] = stats;
+
+      const ready = allStats.every(stats => {
+        return stats;
+      });
+
+      if (ready) {
+        allStats.forEach((stats, index) => {
+          console.log(filenames[index], stats.isFile());
+        });
+      }
     });
   }
 });
