@@ -9,7 +9,7 @@ const fs = require("fs");
 const util = require("util");
 
 //Method #2 for wrapping fs.lstat inside a Promise
-const lstat = util.promisify(fs.lstat);
+// const lstat = util.promisify(fs.lstat);
 
 // Method #3 for wrapping fs.lstat inside a Promise with inbuild fs object promise implementation
 // const lstat = fs.promises.lstat; // or like below
