@@ -14,7 +14,9 @@ fs.readdir(process.cwd(), (err, filesnames) => {
     console.log(err);
   }
 
+  // BAD CODE!!!!!
   for (let filename of filesnames) {
+    // checking the stat of a single file or folder
     fs.lstat(filename, (err, stats) => {
       if (err) {
         console.log(err);
