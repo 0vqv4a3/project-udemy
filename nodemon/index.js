@@ -6,6 +6,7 @@ const chokidar = require("chokidar");
 const program = require("caporal");
 const fs = require("fs");
 const { spawn } = require("child_process"); // this will allowed nodejs program to start another program in our computer
+const chalk = require("chalk");
 
 // build a helper. Note : arguments inside '[]' is optional different from inside '< >' is required or it will throw an error
 program
@@ -21,9 +22,14 @@ program
     }
 
     // add debounce so 'add' event didn't executed constuctivly
+    let proc;
     const start = debounce(() => {
-      spawn("node", [name], { stdio: "inherit" });
-    }, 2000);
+      if (proc) {
+        proc.kill();
+      }
+      console.log(chalk.blue(">>> starting process..."));
+      proc = spawn("node", [name], { stdio: "inherit" });
+    }, 100);
 
     chokidar
       .watch(".")
