@@ -37,7 +37,7 @@ const resultWrapper = document.querySelector(".results");
 const onInput = async event => {
     const movies = await fetchData(event.target.value);
 
-    // checking if movies containt something and remove 'is-active' for hide the dropdown
+    // checking if movies containt something and remove 'is-active' for hiding the dropdown
     if (!movies.length) {
         dropdown.classList.remove("is-active");
         return;
