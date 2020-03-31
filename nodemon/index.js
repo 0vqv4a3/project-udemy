@@ -23,7 +23,7 @@ program
     // add debounce so 'add' event didn't executed constuctivly
     const start = debounce(() => {
       spawn("node", [name], { stdio: "inherit" });
-    }, 300);
+    }, 2000);
 
     chokidar
       .watch(".")
