@@ -104,11 +104,6 @@ class UsersRepository {
   }
 }
 
-const test = async () => {
-  const repo = new UsersRepository("users.json");
-
-  const user = await repo.getOneBy({ id: "19a55f97" });
-  console.log(user);
-};
-
-test();
+// exports an instance of UserRepository instead its class because if its added in another file there is typo in the instance UserRepository parameter(json filename), there will be 2 or more json file that surely we didn't want to happen
+// and we just need one json file for signUp and signIn
+module.exports = new UsersRepository("users.json");
