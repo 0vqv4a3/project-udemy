@@ -81,12 +81,34 @@ class UsersRepository {
     Object.assign(record, attrs);
     await this.writeAll(records);
   }
+
+  // getOneBy(filters) will find user object inside users.json repositories that match the filter object key: value pairs
+  // filters obj like {password: 'mypassword'} to search all user with key password and value "mypassword"
+  async getOneBy(filters) {
+    const records = await this.getAll();
+
+    //this for loop for iterate array of object inside users.json
+    for (let record of records) {
+      let found = true;
+      // this for in loop to iterate all key inside filters obj that passed as parameter to search its matching key:value pairs inside record
+      for (let key in filters) {
+        if (record[key] !== filters[key]) {
+          found = false;
+        }
+      }
+
+      if (found) {
+        return record;
+      }
+    }
+  }
 }
 
 const test = async () => {
   const repo = new UsersRepository("users.json");
 
-  await repo.update("19a55f97", { pass: false });
+  const user = await repo.getOneBy({ id: "19a55f97" });
+  console.log(user);
 };
 
 test();
