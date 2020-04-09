@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser"); // parsing inputs value in form to key : value pairs in object
+//import instance UserRepository from users.js inside repositories
+const usersRepo = require("./repositories/users");
 
 // app is an obj that all different thing a web server can do, it's created from express library
 const app = express();
@@ -21,9 +23,22 @@ app.get("/", (req, res) => {
   `);
 });
 
-// body is middleware function
-app.post("/", (req, res) => {
-  console.log(req.body);
+// handling post request from the FORM
+app.post("/", async (req, res) => {
+  // destructuring email, password and passwordConfirmation from the FORM that user inputed and send as request
+  const { email, password, passwordConfirmation } = req.body;
+  // adding var for checking existing user email in users.json that match email variable above from destructuring the data from user input as request signUp
+  const existingUser = await usersRepo.getOneBy({ email });
+
+  // if existingUser is defined
+  if (existingUser) {
+    return req.send("Email in use");
+  }
+  // checking if password and passwordConfirmation that user signUp didn't match
+  if (password !== passwordConfirmation) {
+    return req.send("password not match");
+  }
+
   res.send("Account succesly created!!!");
 });
 
