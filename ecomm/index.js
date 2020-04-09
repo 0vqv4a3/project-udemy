@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cookieSession({
-    key: ["32jg54ug5uy4g35gt4o3u2tg328"], // this key property is added so cookieSession library will encrypt the user ID inside the cookie, so malicious people can't pretend as different user to access this site as administrator or user
+    key: ["32jg54ug5uy4g35gt4o3u2tg328"], // this key property is added so cookieSession library will encrypt the user ID inside the cookie, so malicious people can't pretend as different user to access this site as administrator or user>> Note : the array of string is just random nothing in particular but if the array of string is changed it will automatically change the encryption of cookie-session library for our user Id authentication
   })
 );
 
