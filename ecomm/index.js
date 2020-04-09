@@ -62,7 +62,7 @@ app.post("/", async (req, res) => {
 
 app.get("/signout", (req, res) => {
   req.session = null;
-  return res.send("You're logged out");
+  res.send("You're logged out");
 });
 
 app.get("/signin", (req, res) => {
@@ -75,6 +75,24 @@ app.get("/signin", (req, res) => {
       </form>
     </div>
 `);
+});
+
+app.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await usersRepo.getOneBy({ email }); // same as {email: email} because the key name and the value name, variable that destructured from req.body has the same name.
+
+  // checking if user is defined/ stored inside database(users.json)
+  if (!user) {
+    return res.send("Email not found");
+  }
+
+  // checking for invalid password
+  if (password !== user.password) {
+    return res.send("Invalid password");
+  }
+
+  res.send("You are sign in");
 });
 
 // the first arg is the PORT number on our machine
