@@ -1,6 +1,9 @@
 const fs = require("fs"); // filesystem module from nodejs.org/api
 const crypto = require("crypto"); // crypto module nodejs.org
+const util = require("util"); // adding it to use promisify fucnt to make normal function with callback to return a function based promise so the callback didn't required
 
+// util.promisify() : used Takes a function following the common error-first callback style, i.e. taking an (err, value) => ... callback as the last argument, and returns a version that returns promises.
+const scrypt = util.promisify(crypto.scrypt);
 class UsersRepository {
   constructor(filename) {
     if (!filename) {
@@ -30,14 +33,27 @@ class UsersRepository {
   // create an account with the data from user Sign Up, by writing the data inside this.filename(json file) so it will be recorded in server
   // attrs(attribute) the data that being returned from user sign Up like {email: dars@gmail.com, password:'a1233as'}
   async create(attrs) {
+    // attrs is {email:'', password:''}
     attrs.id = this.randomId();
+    // generate Random salt
+    const salt = crypto.randomBytes(8).toString("hex");
+
+    // buffer object is a raw data in binary format so it needed to convert it to string
+    // use scrypt promise based funct from nodejs.org/api it will return a buffer object & scrypt is used for adding password with salt and Hashing it with hashing algorithm,
+    const buf = await scrypt(attrs.password, salt, 64); // the last arg is callback but scrypt funct has been promisified by util.promisify() (look at top section), so the callback is removed as for the the last arg 64
 
     const records = await this.getAll();
-    records.push(attrs); // records is an array of object
+    const record = {
+      ...attrs,
+      //this will overwrite the password in attrs that user inputed in form
+      password: `${buf.toString("hex")}.${salt}`,
+      // the period(.) is added to separate the salt from buf(hashed password+salt) and later on if we want to compare the password that the user inputed we can know from where is hased password is started and its end, and to retrive the salt to join it with user password that sign back in after sign up, because the salt is randomisized everytime its called so it needed to store it alongside the password
+    };
+    records.push(record); // records is an array of object
 
     await this.writeAll(records); // it will store it in users.json
 
-    return attrs; // returning attrs obj so the ID for this user can be used inside post handling request inside index.js for SignUp Cookie authentication
+    return record; // returning record obj so the ID for this user can be used inside post handling request inside index.js for SignUp Cookie authentication
   }
 
   async writeAll(records) {

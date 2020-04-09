@@ -34,7 +34,7 @@ app.get("/signup", (req, res) => {
 });
 
 // handling post request from the FORM
-app.post("/", async (req, res) => {
+app.post("/signup", async (req, res) => {
   // destructuring email, password and passwordConfirmation from the FORM that user inputed and send as request
   const { email, password, passwordConfirmation } = req.body;
 
