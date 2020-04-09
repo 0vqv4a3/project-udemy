@@ -35,6 +35,8 @@ class UsersRepository {
     const records = await this.getAll();
     records.push(attrs); // records is an array of object
 
+    await this.writeAll(records); // it will store it in users.json
+
     return attrs; // returning attrs obj so the ID for this user can be used inside post handling request inside index.js for SignUp Cookie authentication
   }
 
