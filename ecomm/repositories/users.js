@@ -38,7 +38,7 @@ class UsersRepository {
     // generate Random salt
     const salt = crypto.randomBytes(8).toString("hex");
 
-    // buffer object is a raw data in binary format so it needed to convert it to string
+    // buffer is an array that has a raw data in binary format so it needed to be converted to string with hex format for our use
     // use scrypt promise based funct from nodejs.org/api it will return a buffer object & scrypt is used for adding password with salt and Hashing it with hashing algorithm,
     const buf = await scrypt(attrs.password, salt, 64); // the last arg is callback but scrypt funct has been promisified by util.promisify() (look at top section), so the callback is removed as for the the last arg 64
 
@@ -54,6 +54,15 @@ class UsersRepository {
     await this.writeAll(records); // it will store it in users.json
 
     return record; // returning record obj so the ID for this user can be used inside post handling request inside index.js for SignUp Cookie authentication
+  }
+
+  async comparePasswords(saved, supplied) {
+    // saved >> saved password inside our database(users.json) with format hashed.salt
+    // supplied >> supplied password that user inputed in FORM
+    const [hashed, salt] = saved.split(".");
+    const hashedSuppliedBuf = await scrypt(supplied, salt, 64); // this will return buffer (a raw data in binary format)
+
+    return hashed === hashedSuppliedBuf.toString("hex");
   }
 
   async writeAll(records) {
