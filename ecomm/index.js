@@ -39,6 +39,10 @@ app.post("/", async (req, res) => {
     return req.send("password not match");
   }
 
+  // Create a user inside users repo to represent this person(user) that signUp
+  const user = await usersRepo.create({ email, password }); // usersRepo.create() will return attrs(user) object with its unique ID
+  // Store the id of that user inside the user Cookie
+
   res.send("Account succesly created!!!");
 });
 

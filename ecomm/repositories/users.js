@@ -22,7 +22,7 @@ class UsersRepository {
     // Return the parsed data
     return JSON.parse(
       await fs.promises.readFile(this.filename, {
-        encoding: "utf8"
+        encoding: "utf8",
       })
     );
   }
@@ -34,6 +34,8 @@ class UsersRepository {
 
     const records = await this.getAll();
     records.push(attrs); // records is an array of object
+
+    return attrs; // returning attrs obj so the ID for this user can be used inside post handling request inside index.js for SignUp Cookie authentication
   }
 
   async writeAll(records) {
@@ -54,19 +56,19 @@ class UsersRepository {
   // find user with specified "id"
   async getOne(id) {
     const records = await this.getAll();
-    return records.find(record => record.id === id);
+    return records.find((record) => record.id === id);
   }
 
   async delete(id) {
     const records = await this.getAll();
-    const filteredRecords = records.filter(record => record.id !== id);
+    const filteredRecords = records.filter((record) => record.id !== id);
 
     await this.writeAll(filteredRecords);
   }
 
   async update(id, attrs) {
     const records = await this.getAll();
-    const record = records.find(record => record.id === id);
+    const record = records.find((record) => record.id === id);
 
     if (!record) {
       throw new Error(`Record with id ${id} is not found`);
